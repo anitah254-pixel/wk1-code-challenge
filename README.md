@@ -1,1 +1,2 @@
-# wk1-code-challenge
+my first code challenge
+hope i did my best
