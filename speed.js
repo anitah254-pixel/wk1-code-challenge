@@ -1,21 +1,37 @@
-const prompt =requires("prompt-sync")();
+const readline = require("readline");
 
-function speedDetector(){
-    let speed = parseFloat(prompt('Enter speed of the car:'));
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-    if(speed < 70){
-        console.log('Ok');
-            return'Ok';
-    } else{
-        let point = Math.floor((speed -70)/5);
-        if(point > 12){
-            console.log('license suspended');
-            return'license suspended';
-        } else{
-            console.log('Your demerit points are: ${points}');
-            return' Your demerit points are: &{points}';
-        }
+function calculateDemeritPoints(speed) {
+  const speedLimit = 70;
+  const kmPerDemeritPoint = 5;
+
+  if (speed <= speedLimit) {
+    console.log("Ok");
+  } else {
+    const excessSpeed = speed - speedLimit;
+    const demeritPoints = Math.floor(excessSpeed / kmPerDemeritPoint);
+
+    if (demeritPoints > 12) {
+      console.log("License suspended");
+    } else {
+      console.log(`Points: ${demeritPoints}`);
     }
+  }
 }
 
-console.log(speedDetector());
+rl.question("Enter the speed of the car (km/s): ", (input) => {
+  const speed = parseInt(input);
+
+  if (!isNaN(speed)) {
+    calculateDemeritPoints(speed);
+  } else {
+    console.log("Invalid input. Please enter a valid number.");
+  }
+
+  // Close the readline interface
+  rl.close();
+});

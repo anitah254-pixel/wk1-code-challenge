@@ -1,20 +1,33 @@
-const prompt = require('prompt-sync')();
+const readline = require("readline");
 
-function studentMarks(){
-    let marks = parseFloat(prompt('Enter students marks:'));
-    if(marks > 79 &&marks <= 100){
-        console.lo('A');
-    } else if(marks >= 60 &&marks <= 79){
-        console.lo('B');
-    } else if(marks > 49 &&marks <= 59){
-        console.lo('C');
-    } else if(marks >= 40 &&marks <= 49){
-        console.lo('D');
-    } else if(marks >=0 &&marks < 40){
-        console.lo('E');
-    } else{
-        console.lo('invalid')
-    }
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+function calculateGrade(marks) {
+  if (marks > 79) {
+    return "A";
+  } else if (marks >= 60) {
+    return "B";
+  } else if (marks >= 50) {
+    return "C";
+  } else if (marks >= 40) {
+    return "D";
+  } else {
+    return "E";
+  }
 }
 
-studentMarks();
+rl.question("Please enter student marks (0-100): ", (input) => {
+  const marks = parseInt(input);
+
+  if (!isNaN(marks) && marks >= 0 && marks <= 100) {
+    const grade = calculateGrade(marks);
+    console.log(`The student's grade is: ${grade}`);
+  } else {
+    console.log("Invalid input. Please enter a number between 0 and 100.");
+  }
+
+  rl.close();
+});
